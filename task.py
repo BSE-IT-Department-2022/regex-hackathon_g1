@@ -10,13 +10,13 @@ import re
 
 
 full_name = input("What is your Full Name? ").strip()
-first_n, middle_n, last_n = re.split(' |/|\.', full_name)
-first_l = first_n[0].lower()
-last = last_n.lower()
+first_name, middle_name, last_name = re.split(' |/|\.', full_name)
+first_l = first_name[0].lower()
+last = last_name.lower()
 
-f_match = re.compile(r"([a-zA-Z]+[ ][a-zA-Z]+[ ./][a-zA-Z]+){1,30}")
+fullname_pattern = re.compile(r"([a-zA-Z]+[ ][a-zA-Z]+[ ./][a-zA-Z]+){1,30}")
 
-if re.fullmatch(f_match, full_name):
+if re.fullmatch(fullname_pattern, full_name):
     print("Valid")
 else:
     print("Invalid")
@@ -28,11 +28,11 @@ else:
 # Cannot end with an uppercase letter
 # Can only have 2 uppercase letter in it
 
-username = input("Enter in your username: ")
+username = input("Enter in your username: ").strip()
 
-u_match = re.compile(rf"{first_n.capitalize()}{last_n.capitalize()}")
+username_pattern = re.compile(rf"{first_name.capitalize()}{last_name.capitalize()}")
 
-if re.fullmatch(u_match, username):
+if re.fullmatch(username_pattern, username):
     print("Valid")
 else:
     print("Invalid")
