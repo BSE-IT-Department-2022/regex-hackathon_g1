@@ -47,7 +47,7 @@ else:
 
 email = input("Please enter your email ").strip()
 
-e_match = re.compile(rf"{first_l}\.{last}@[a-z]+\.email")
+email_pattern = re.compile(rf"{first_l}\.{last}@[a-z]+\.email")
 
 if re.fullmatch(e_match, email):
     print("Valid")
