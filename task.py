@@ -49,7 +49,7 @@ email = input("Please enter your email ").strip()
 
 email_pattern = re.compile(rf"{first_l}\.{last}@[a-z]+\.email")
 
-if re.fullmatch(e_match, email):
+if re.fullmatch(email_pattern, email):
     print("Valid")
 else:
     print("Invalid")
