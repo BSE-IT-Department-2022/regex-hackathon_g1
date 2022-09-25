@@ -86,7 +86,6 @@ else:
 
     
 # PHONE NUMBER
-
 # In the format of +<AREA_CODE><sep><XXX><sep><YYY><sep><ZZ>
 # Where <sep> is a seperator and can be on eof these:
 #     - dash
