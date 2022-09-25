@@ -68,7 +68,7 @@ def validate_email(fullname, email):
     last_name = re.search(r'(?<=[\/\.])[(A-Z)]{1}[a-z]+\Z', fullname).group().lower()
 
     # email is in the form <f>.<last>@<org_name>.email where <f> is the first letter of the first name
-    email_pattern = re.compile(rf'^{first_name[0]}\.{last_name}@alustudent\.email$')
+    email_pattern = re.compile(rf'^{first_name[0]}\.{last_name}@[a-z0-9]*\.email$')
 
     email_match = re.fullmatch(email_pattern, email)
 
@@ -76,3 +76,67 @@ def validate_email(fullname, email):
         print('Your email is NOT valid!')
     else:
         print('Your email is valid')
+
+
+def validate_phone_number(phone_number):
+    """Validate an email address of a user.
+
+    Args:
+         phone_number (str): the phone number to validate
+    """
+    phone_number_pattern = re.compile(r'^[\+]{1}[0-9]{3}(\s|\-)[0-9]{3}(\s|\-)[0-9]{3}(\s|\-)[0-9]{2}$')
+    phone_number_match = re.fullmatch(phone_number_pattern, phone_number)
+
+    if not phone_number_match:
+        print('Your phone number is NOT valid')
+    else:
+        print('Your phone number is valid')
+
+
+def validate_organization_id(organization_id):
+    """Validate id of an organization.
+
+    Args:
+         organization_id (str): id to validate
+    """
+    # organization id
+    #   - Cannot start with a letter
+    #   - Can only have lowercase letters
+    #   - Can have numbers
+    #   - Cannot end with a number
+    id_pattern = re.compile(r'^\A[^a-zA-Z][a-z0-9]*[^0-9]\Z$')
+    id_match = re.fullmatch(id_pattern, organization_id)
+    if not id_match:
+        print('Your organization id is NOT valid!')
+    else:
+        print('Your organization id is valid')
+
+
+def validate_password(password):
+    """Validate a password.
+
+    Args:
+         password (str): password to validate
+    """
+    length_pattern = re.compile(r'^.{8}$')
+    length_match = re.fullmatch(length_pattern, password)
+    if not length_match:
+        raise Exception('The length cannot be more than or less than 8')
+
+    # find all uppercase letters and compare if they are only 2
+    has_2_uppercase = len(re.findall(r'[A-Z]', password)) == 2
+
+    # find all lowercase letters and compare if they are only 2
+    has_2_lowercase = len(re.findall(r'[a-z]', password)) == 2
+
+    # find all numbers and compare if they are only 2
+    has_2_numbers = len(re.findall(r'[0-9]', password)) == 2
+
+    # find all allowed meta_characters and compare if they are only 2
+    has_2_meta_characters = len(re.findall(r'[!@#$%^&*()~]', password)) == 2
+
+    # if all True the password is valid
+    if has_2_uppercase and has_2_lowercase and has_2_numbers and has_2_meta_characters:
+        print('Your password is valid')
+    else:
+        print('Your password is NOT valid!')
