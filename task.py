@@ -53,3 +53,19 @@ if re.fullmatch(email_pattern, email):
     print("Valid")
 else:
     print("Invalid")
+
+
+# PHONE NUMBER
+
+# In the format of +<AREA_CODE><sep><XXX><sep><YYY><sep><ZZ>
+# Where <sep> is a seperator and can be on eof these:
+#     - dash
+#     - whitespace
+# Area code can only be three digits
+
+pattern = "^[\+][0-9]{3}[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{2}$"
+user_input = input("Please enter your phone number: ").strip()
+if(re.search(pattern, user_input)):
+    print("Valid phone number")
+else:
+    print("Invalid phone number")
