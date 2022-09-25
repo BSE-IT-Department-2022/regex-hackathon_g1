@@ -53,3 +53,35 @@ if re.fullmatch(email_pattern, email):
     print("Valid")
 else:
     print("Invalid")
+
+    
+# PASSWORD
+# length cannot be more or less than 8
+# password can contain 2 out of each of the following:- (0-9), (Aa-Zz), (!@#$%^&*()~)
+
+password = input("Please enter your password").strip()
+
+password_pattern = re.compile(r"^(?=(?:.*[a-z]){2})(?=(?:.*[A-Z]){2})(?=(?:.*\d){2})(?=(?:.*[!@#$%^&*()~]){2}).{8}$")
+
+if re.fullmatch(password_pattern, password):
+    print("Valid password")
+else:
+    print("Invalid Password")
+
+ 
+# ORGANIZATION ID
+# Can only have lowercase letters
+# Can have numbers
+# Cannot start with a letter
+# Cannot end with a number
+
+org_id = input("Please enter your Organization ID").strip()
+
+org_id_pattern = re.compile(r"(^[^A-Za-z]([0-9]*[a-z]*)*[^0-9]$)")
+
+if re.fullmatch(org_id_pattern, org_id):
+    print("Valid Organization ID")
+else:
+    print("Invalid Organization ID")
+
+    
