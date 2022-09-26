@@ -2,8 +2,8 @@ import re
 
 
 def validate_birthdate(date):
-
     """Validate date of birth.
+
     Args:
          date (str): date to validate
     """

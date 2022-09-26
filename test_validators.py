@@ -2,6 +2,7 @@ import unittest
 from io import StringIO
 from unittest.mock import patch
 
+
 from validators import validate_birthdate, validate_username, validate_email
 
 
@@ -162,6 +163,6 @@ class TestValidateEmail(unittest.TestCase):
             validate_email('Hephzibah O.Ihesie', 'h_ihesie@gmail.email')
             self.assertEqual(fake_out.getvalue(), 'Your email is NOT valid!\n')
 
-            
+          
 if __name__ == '__main__':
     unittest.main()
