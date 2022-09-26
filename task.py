@@ -37,7 +37,6 @@ if re.fullmatch(username_pattern, username):
 else:
     print("Invalid")
 
-
 # EMAIL
 # In the format of <f>.<last>@<org_name>.email where <f> is the first letter of the first name.
 # No numbers allowed
@@ -54,7 +53,6 @@ if re.fullmatch(email_pattern, email):
 else:
     print("Invalid")
 
-    
 # PASSWORD
 # length cannot be more or less than 8
 # password can contain 2 out of each of the following:- (0-9), (Aa-Zz), (!@#$%^&*()~)
@@ -68,7 +66,6 @@ if re.fullmatch(password_pattern, password):
 else:
     print("Invalid Password")
 
- 
 # ORGANIZATION ID
 # Can only have lowercase letters
 # Can have numbers
@@ -84,7 +81,6 @@ if re.fullmatch(org_id_pattern, org_id):
 else:
     print("Invalid Organization ID")
 
-    
 # PHONE NUMBER
 # In the format of +<AREA_CODE><sep><XXX><sep><YYY><sep><ZZ>
 # Where <sep> is a seperator and can be on eof these:
@@ -92,9 +88,9 @@ else:
 #     - whitespace
 # Area code can only be three digits
 
-pattern = "^[\+][0-9]{3}[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{2}$"
+pattern = "^[\+][0-9]{3}[-\s\.][0-9]{3}[-\s\.][0-9]{3}[-\s\.][0-9]{2}$"
 user_input = input("Please enter your phone number: ").strip()
-if(re.search(pattern, user_input)):
+if (re.search(pattern, user_input)):
     print("Valid phone number")
 else:
     print("Invalid phone number")

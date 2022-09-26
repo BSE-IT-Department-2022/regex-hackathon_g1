@@ -94,3 +94,18 @@ def validate_organization_id(organization_id):
         print("Valid Organization ID")
     else:
         print("Invalid Organization ID")
+
+
+def validate_phone_number(phone_number):
+    """Validate the phone number of a user.
+
+    Args:
+         phone_number (str): the phone number to validate
+    """
+    phone_number_pattern = re.compile(r"^[\+][0-9]{3}[-\s\.][0-9]{3}[-\s\.][0-9]{3}[-\s\.][0-9]{2}$")
+    phone_number_match = re.search(phone_number_pattern, phone_number)
+
+    if not phone_number_match:
+        print('Invalid phone number')
+    else:
+        print('Valid phone number')
