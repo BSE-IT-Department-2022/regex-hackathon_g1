@@ -16,7 +16,7 @@
 1. Clone this repo
 
 ```sh
-git https://github.com/BSE-IT-Department-2022/regex-hackathon.git
+git clone https://github.com/BSE-IT-Department-2022/regex-hackathon.git
 ```
 
 2. Run the unittest
