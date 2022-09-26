@@ -17,6 +17,35 @@ def validate_birthdate(date):
         print('Your birthdate is valid')
 
 
+def validate_fullname(fullname):
+    """Validate a fullname.
+
+    Args:
+         fullname (str): the fullname to validate
+    """
+    # a fullname contains at most 30 characters
+    length_pattern = re.compile(r'^.{,30}$')
+    length_match = re.fullmatch(length_pattern, fullname)
+
+    # fullname can be in the format <First> <Middle> <Last>
+    main_pattern = re.compile(r'^[(A-Z)]{1}[a-z]+\s[(A-Z)]{1}[a-z]+\s[(A-Z)]{1}[a-z]+$')
+    main_match = re.fullmatch(main_pattern, fullname)
+
+    # fullname can be in the format <First> <M>.<Last>
+    dot_pattern = re.compile(r'^[(A-Z)]{1}[a-z]+\s[(A-Z)]{1}\.[(A-Z)]{1}[a-z]+$')
+    dot_match = re.fullmatch(dot_pattern, fullname)
+
+    # fullname can be in the format <First> <M>/<Last>
+    forward_slash_pattern = re.compile(r'^[(A-Z)]{1}[a-z]+\s[(A-Z)]{1}\/[(A-Z)]{1}[a-z]+$')
+    forward_slash_match = re.fullmatch(forward_slash_pattern, fullname)
+
+    # if one of the match is not True
+    if not length_match or not (main_match or dot_match or forward_slash_match):
+        print('Your fullname is NOT valid')
+    else:
+        print('Your fullname is valid')
+
+
 def validate_username(fullname, username):
     """Validate a username.
     Args:
@@ -24,13 +53,10 @@ def validate_username(fullname, username):
          username (str): the username to validate from the fullname
     """
 
-
     first_name, middle_name, last_name = re.split(' |/|\.', fullname)
-
 
     # a username is the form  <Firstname><Lastname>
     username_match = re.fullmatch(r'{}{}'.format(first_name, last_name), username)
-
 
     if not username_match:
         print('Your username is NOT valid!')
@@ -56,6 +82,47 @@ def validate_email(fullname, email):
         print('Your email is NOT valid!')
     else:
         print('Your email is valid')
+
+
+def validate_password(password):
+    """Validate a password.
+
+    Args:
+         password (str): password to validate
+    """
+    # The password can contain 2 out of each of the following character groups:
+    # (0-9)
+    # (Aa-Zz)
+    # (!@#$%^&*()~)
+    # The length cannot be more than or less than 8
+    password_pattern = re.compile(
+        r"^(?=(?:.*[a-z]){2})(?=(?:.*[A-Z]){2})(?=(?:.*\d){2})(?=(?:.*[!@#$%^&*()~]){2}).{8}$")
+
+    password_match = re.fullmatch(password_pattern, password)
+    if password_match:
+        print("Valid password")
+    else:
+        print("Invalid password")
+
+
+def validate_organization_id(organization_id):
+    """Validate id of an organization.
+
+    Args:
+         organization_id (str): id to validate
+    """
+    # organization id
+    #   - Cannot start with a letter
+    #   - Can only have lowercase letters
+    #   - Can have numbers
+    #   - Cannot end with a number
+    id_pattern = re.compile(r'^(^[^A-Za-z]([0-9]*[a-z]*)*[^0-9]$)')
+    id_match = re.fullmatch(id_pattern, organization_id)
+
+    if id_match:
+        print("Valid Organization ID")
+    else:
+        print("Invalid Organization ID")
 
 
 def validate_phone_number(phone_number):
