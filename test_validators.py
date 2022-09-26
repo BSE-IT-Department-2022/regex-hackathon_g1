@@ -81,7 +81,6 @@ class TestValidateBirthdate(unittest.TestCase):
 
 
 
-    unittest.main()
 
 
 
