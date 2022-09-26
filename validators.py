@@ -24,13 +24,10 @@ def validate_username(fullname, username):
          username (str): the username to validate from the fullname
     """
 
-
     first_name, middle_name, last_name = re.split(' |/|\.', fullname)
-
 
     # a username is the form  <Firstname><Lastname>
     username_match = re.fullmatch(r'{}{}'.format(first_name, last_name), username)
-
 
     if not username_match:
         print('Your username is NOT valid!')
@@ -56,3 +53,44 @@ def validate_email(fullname, email):
         print('Your email is NOT valid!')
     else:
         print('Your email is valid')
+
+
+def validate_password(password):
+    """Validate a password.
+
+    Args:
+         password (str): password to validate
+    """
+    # The password can contain 2 out of each of the following character groups:
+    # (0-9)
+    # (Aa-Zz)
+    # (!@#$%^&*()~)
+    # The length cannot be more than or less than 8
+    password_pattern = re.compile(
+        r"^(?=(?:.*[a-z]){2})(?=(?:.*[A-Z]){2})(?=(?:.*\d){2})(?=(?:.*[!@#$%^&*()~]){2}).{8}$")
+
+    password_match = re.fullmatch(password_pattern, password)
+    if password_match:
+        print("Valid password")
+    else:
+        print("Invalid password")
+
+
+def validate_organization_id(organization_id):
+    """Validate id of an organization.
+
+    Args:
+         organization_id (str): id to validate
+    """
+    # organization id
+    #   - Cannot start with a letter
+    #   - Can only have lowercase letters
+    #   - Can have numbers
+    #   - Cannot end with a number
+    id_pattern = re.compile(r'^(^[^A-Za-z]([0-9]*[a-z]*)*[^0-9]$)')
+    id_match = re.fullmatch(id_pattern, organization_id)
+
+    if id_match:
+        print("Valid Organization ID")
+    else:
+        print("Invalid Organization ID")

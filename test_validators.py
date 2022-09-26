@@ -2,8 +2,8 @@ import unittest
 from io import StringIO
 from unittest.mock import patch
 
-
-from validators import validate_birthdate, validate_username, validate_email
+from validators import validate_birthdate, validate_username, validate_email, validate_password, \
+    validate_organization_id
 
 
 class TestValidateBirthdate(unittest.TestCase):
@@ -117,7 +117,6 @@ class TestValidateUsername(unittest.TestCase):
             self.assertEqual(fake_out.getvalue(), 'Your username is NOT valid!\n')
 
 
-
 class TestValidateEmail(unittest.TestCase):
     def test_validate_email(self):
         with patch("sys.stdout", new=StringIO()) as fake_out:
@@ -163,6 +162,65 @@ class TestValidateEmail(unittest.TestCase):
             validate_email('Hephzibah O.Ihesie', 'h_ihesie@gmail.email')
             self.assertEqual(fake_out.getvalue(), 'Your email is NOT valid!\n')
 
-          
+
+class TestValidatePassword(unittest.TestCase):
+    def test_good_password(self):
+        with patch("sys.stdout", new=StringIO()) as fake_out:
+            validate_password('AbIs@(13')
+            self.assertEqual(fake_out.getvalue(), 'Valid password\n')
+
+    def test_short_password(self):
+        with patch("sys.stdout", new=StringIO()) as fake_out:
+            validate_password('AbIsa')
+            self.assertEqual(fake_out.getvalue(), 'Invalid password\n')
+
+    def test_long_password(self):
+        with patch("sys.stdout", new=StringIO()) as fake_out:
+            validate_password('AbIs@(13AbIs@(13a')
+            self.assertEqual(fake_out.getvalue(), 'Invalid password\n')
+
+    def test_numbers_password(self):
+        with patch("sys.stdout", new=StringIO()) as fake_out:
+            validate_password('12345678')
+            self.assertEqual(fake_out.getvalue(), 'Invalid password\n')
+
+    def test_uppercase_password(self):
+        with patch("sys.stdout", new=StringIO()) as fake_out:
+            validate_password('ABCD12&(')
+            self.assertEqual(fake_out.getvalue(), 'Invalid password\n')
+
+    def test_lowercase_password(self):
+        with patch("sys.stdout", new=StringIO()) as fake_out:
+            validate_password('abcd12(&')
+            self.assertEqual(fake_out.getvalue(), 'Invalid password\n')
+
+    def test_meta_characters_password(self):
+        with patch("sys.stdout", new=StringIO()) as fake_out:
+            validate_password('abcd1234')
+            self.assertEqual(fake_out.getvalue(), 'Invalid password\n')
+
+
+class TestValidateOrganizationId(unittest.TestCase):
+    def test_valid_id(self):
+        with patch("sys.stdout", new=StringIO()) as fake_out:
+            validate_organization_id('1abcd123a')
+            self.assertEqual(fake_out.getvalue(), 'Valid Organization ID\n')
+
+    def test_starts_letter_id(self):
+        with patch("sys.stdout", new=StringIO()) as fake_out:
+            validate_organization_id('abcd123a')
+            self.assertEqual(fake_out.getvalue(), 'Invalid Organization ID\n')
+
+    def test_ends_number_id(self):
+        with patch("sys.stdout", new=StringIO()) as fake_out:
+            validate_organization_id('1abcd123')
+            self.assertEqual(fake_out.getvalue(), 'Invalid Organization ID\n')
+
+    def test_uppercase_id(self):
+        with patch("sys.stdout", new=StringIO()) as fake_out:
+            validate_organization_id('1aBcd123')
+            self.assertEqual(fake_out.getvalue(), 'Invalid Organization ID\n')
+
+
 if __name__ == '__main__':
     unittest.main()
