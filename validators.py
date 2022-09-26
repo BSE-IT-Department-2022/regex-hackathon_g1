@@ -17,6 +17,35 @@ def validate_birthdate(date):
         print('Your birthdate is valid')
 
 
+def validate_fullname(fullname):
+    """Validate a fullname.
+
+    Args:
+         fullname (str): the fullname to validate
+    """
+    # a fullname contains at most 30 characters
+    length_pattern = re.compile(r'^.{,30}$')
+    length_match = re.fullmatch(length_pattern, fullname)
+
+    # fullname can be in the format <First> <Middle> <Last>
+    main_pattern = re.compile(r'^[(A-Z)]{1}[a-z]+\s[(A-Z)]{1}[a-z]+\s[(A-Z)]{1}[a-z]+$')
+    main_match = re.fullmatch(main_pattern, fullname)
+
+    # fullname can be in the format <First> <M>.<Last>
+    dot_pattern = re.compile(r'^[(A-Z)]{1}[a-z]+\s[(A-Z)]{1}\.[(A-Z)]{1}[a-z]+$')
+    dot_match = re.fullmatch(dot_pattern, fullname)
+
+    # fullname can be in the format <First> <M>/<Last>
+    forward_slash_pattern = re.compile(r'^[(A-Z)]{1}[a-z]+\s[(A-Z)]{1}\/[(A-Z)]{1}[a-z]+$')
+    forward_slash_match = re.fullmatch(forward_slash_pattern, fullname)
+
+    # if one of the match is not True
+    if not length_match or not (main_match or dot_match or forward_slash_match):
+        print('Your fullname is NOT valid')
+    else:
+        print('Your fullname is valid')
+
+
 def validate_username(fullname, username):
     """Validate a username.
     Args:

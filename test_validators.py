@@ -3,7 +3,7 @@ from io import StringIO
 from unittest.mock import patch
 
 from validators import validate_birthdate, validate_username, validate_email, validate_password, \
-    validate_organization_id, validate_phone_number
+    validate_organization_id, validate_phone_number, validate_fullname
 
 
 class TestValidateBirthdate(unittest.TestCase):
@@ -78,6 +78,55 @@ class TestValidateBirthdate(unittest.TestCase):
             validate_birthdate('24.13.a4555')
             self.assertEqual(fake_out.getvalue(),
                              'Your birthdate is NOT valid\n')
+
+
+class TestValidateFullName(unittest.TestCase):
+    def test_good_name(self):
+        with patch("sys.stdout", new=StringIO()) as fake_out:
+            validate_fullname('Hephzibah O.Ihesie')
+            self.assertEqual(fake_out.getvalue(), 'Your fullname is valid\n')
+
+    def test_long_name(self):
+        with patch("sys.stdout", new=StringIO()) as fake_out:
+            validate_fullname('Hephzibah O.IhesieHephzibah O.IhesieHephzibah O.Ihesie')
+            self.assertEqual(fake_out.getvalue(), 'Your fullname is NOT valid\n')
+
+    def test_numbered_name(self):
+        with patch("sys.stdout", new=StringIO()) as fake_out:
+            validate_fullname('122335O.Ihesie')
+            self.assertEqual(fake_out.getvalue(), 'Your fullname is NOT valid\n')
+
+    def test_middle_name(self):
+        with patch("sys.stdout", new=StringIO()) as fake_out:
+            validate_fullname('Abissa Zaki Moussa')
+            self.assertEqual(fake_out.getvalue(), 'Your fullname is valid\n')
+
+    def test_dot_middle_name(self):
+        with patch("sys.stdout", new=StringIO()) as fake_out:
+            validate_fullname('Abissa Z.Moussa')
+            self.assertEqual(fake_out.getvalue(), 'Your fullname is valid\n')
+
+    def test_slash_middle_name(self):
+        with patch("sys.stdout", new=StringIO()) as fake_out:
+            validate_fullname('Abissa Z/Moussa')
+            self.assertEqual(fake_out.getvalue(), 'Your fullname is valid\n')
+
+    def test_bad_middle_name(self):
+        with patch("sys.stdout", new=StringIO()) as fake_out:
+            validate_fullname('Abissa Zaki. Moussa')
+            self.assertEqual(fake_out.getvalue(), 'Your fullname is NOT valid\n')
+
+        with patch("sys.stdout", new=StringIO()) as fake_out:
+            validate_fullname('Abissa Zaki/ Moussa')
+            self.assertEqual(fake_out.getvalue(), 'Your fullname is NOT valid\n')
+
+        with patch("sys.stdout", new=StringIO()) as fake_out:
+            validate_fullname('Abissa M Moussa')
+            self.assertEqual(fake_out.getvalue(), 'Your fullname is NOT valid\n')
+
+        with patch("sys.stdout", new=StringIO()) as fake_out:
+            validate_fullname('Abissa M./Moussa')
+            self.assertEqual(fake_out.getvalue(), 'Your fullname is NOT valid\n')
 
 
 class TestValidatePhoneNumber(unittest.TestCase):
