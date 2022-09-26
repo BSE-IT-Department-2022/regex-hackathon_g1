@@ -79,7 +79,6 @@ class TestValidateBirthdate(unittest.TestCase):
                              'Your birthdate is NOT valid\n')
 
 
-    pass
 
 
 if __name__ == '__main__':
