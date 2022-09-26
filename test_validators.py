@@ -3,7 +3,7 @@ from io import StringIO
 from unittest.mock import patch
 
 
-from validators import validate_birthdate, validate_username, validate_email
+from validators import validate_birthdate, validate_phone_number, validate_username, validate_email
 
 
 class TestValidateBirthdate(unittest.TestCase):
@@ -80,9 +80,48 @@ class TestValidateBirthdate(unittest.TestCase):
                              'Your birthdate is NOT valid\n')
 
 
+
+
+
+
+
 class TestValidatePhoneNumber(unittest.TestCase):
-    """Test cases for validate_phone_number go here"""
-    pass
+    def test_dash_phone(self):
+        with patch("sys.stdout", new=StringIO()) as fake_out:
+            validate_phone_number("+251-786-342-09")
+            self.assertEqual(fake_out.getvalue(),
+                             'Valid phone number\n')
+
+    def test_space_phone(self):
+        with patch("sys.stdout", new=StringIO()) as fake_out:
+            validate_phone_number("+251 786 342 09")
+            self.assertEqual(fake_out.getvalue(),
+                             'Valid phone number\n')
+
+    def test_invalid_seperator(self):
+        with patch("sys.stdout", new=StringIO()) as fake_out:
+            validate_phone_number("+25178634209")
+            self.assertEqual(fake_out.getvalue(),
+                             'Invalid phone number\n')
+
+    def test_invalid_areacode(self):
+        with patch("sys.stdout", new=StringIO()) as fake_out:
+            validate_phone_number("+25-786-342-09")
+            self.assertEqual(fake_out.getvalue(),
+                             'Invalid phone number\n')
+
+        with patch("sys.stdout", new=StringIO()) as fake_out:
+            validate_phone_number("+25 786 342 09")
+            self.assertEqual(fake_out.getvalue(),
+                             'Invalid phone number\n')
+
+        with patch("sys.stdout", new=StringIO()) as fake_out:
+            validate_phone_number("+25-786-342-09")
+            self.assertEqual(fake_out.getvalue(),
+                             'Invalid phone number\n')
+
+
+
 
 
 class TestValidateUsername(unittest.TestCase):
@@ -166,3 +205,5 @@ class TestValidateEmail(unittest.TestCase):
           
 if __name__ == '__main__':
     unittest.main()
+
+
