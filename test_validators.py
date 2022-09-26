@@ -3,7 +3,7 @@ from io import StringIO
 from unittest.mock import patch
 
 
-from validators import validate_birthdate, validate_username, validate_email, validate_phone_number
+from validators import validate_birthdate, validate_phone_number, validate_username, validate_email
 
 
 class TestValidateBirthdate(unittest.TestCase):
